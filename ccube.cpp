@@ -1,5 +1,6 @@
 #include "ccube.h"
 #include <QDebug>
+#include <cmath>
 
 
 
@@ -27,7 +28,9 @@ static const float m_fVertices[8][3] = {
 
 CCube::CCube(int identifiant) : CObject(identifiant)
 {
-
+    scale->vSetX(1.0);
+    scale->vSetY(1.0);
+    scale->vSetZ(1.0);
 }
 
 CCube::~CCube()
@@ -64,19 +67,19 @@ void CCube::vGetSideColor(int _face, CVector3 *_poColor)
     switch(_face)
     {
     case 0:
-        _poColor->vSetX(0.0f);
-        _poColor->vSetY(0.0f);
-        _poColor->vSetZ(0.0f);
+        _poColor->vSetX(0.8f);
+        _poColor->vSetY(0.6f);
+        _poColor->vSetZ(0.3f);
         break;
     case 1:
-        _poColor->vSetX(0.0f);
-        _poColor->vSetY(0.0f);
-        _poColor->vSetZ(0.0f);
+        _poColor->vSetX(0.8f);
+        _poColor->vSetY(0.6f);
+        _poColor->vSetZ(0.3f);
         break;
     case 2:
-        _poColor->vSetX(0.0f);
-        _poColor->vSetY(0.0f);
-        _poColor->vSetZ(0.0f);
+        _poColor->vSetX(0.8f);
+        _poColor->vSetY(0.6f);
+        _poColor->vSetZ(0.3f);
         break;
     case 3:
         _poColor->vSetX(0.8f);
@@ -84,15 +87,42 @@ void CCube::vGetSideColor(int _face, CVector3 *_poColor)
         _poColor->vSetZ(0.3f);
         break;
     case 4:
-        _poColor->vSetX(0.0f);
-        _poColor->vSetY(0.0f);
-        _poColor->vSetZ(0.0f);
+        _poColor->vSetX(0.8f);
+        _poColor->vSetY(0.6f);
+        _poColor->vSetZ(0.3f);
         break;
     case 5:
     default:
-        _poColor->vSetX(0.0f);
-        _poColor->vSetY(0.0f);
-        _poColor->vSetZ(0.0f);
+        _poColor->vSetX(0.8f);
+        _poColor->vSetY(0.6f);
+        _poColor->vSetZ(0.3f);
         break;
     }
+}
+
+void CCube::getScale(CVector3 *_poScale)
+{
+   _poScale->vSetX(scale->fGetX());
+   _poScale->vSetY(scale->fGetY());
+   _poScale->vSetZ(scale->fGetZ());
+}
+
+
+bool CCube::detectionCollision(CVector3 *_poPosBoule, int *i)
+{
+    CVector3 positionObjet;
+    this->getPosition(&positionObjet);
+
+    double ys=_poPosBoule->fGetY();
+    double yc=positionObjet.fGetY();
+    double zs=_poPosBoule->fGetZ();
+    double zc=positionObjet.fGetZ();
+    double L=2*scale->fGetY();
+    double l=2*scale->fGetZ()*0.12;
+    if(((fabs(ys-yc))<((L/2)+0.3)) && (fabs(zs-zc))<((l/2)+0.3) )
+    {
+        return true;
+    }
+    return false;
+
 }

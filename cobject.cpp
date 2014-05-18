@@ -4,6 +4,7 @@ CObject::CObject(int i)
 {
     identifiant=i;
     position=new CVector3;
+    scale=new CVector3;
 }
 
 CObject::~CObject()
