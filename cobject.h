@@ -4,6 +4,7 @@
 
 class CObject
 {
+protected:
     int identifiant;
     CVector3* position;
 public:
@@ -19,9 +20,12 @@ public:
     virtual int iGetNbVertices(int _iFace) = 0;
     virtual void vGetVertex(int _iFace, int _iVertex, CVector3* _poVect) = 0;
     virtual void vGetSideColor(int _face, CVector3* _poColor) = 0;
+<<<<<<< HEAD
     virtual void getDeplacement(CVector3* _poDepla) = 0;
     virtual void getScale(CVector3* _poScale)=0;
     virtual bool detectionCollision(CVector3* _poPosBoule, int* i)=0;
+=======
+>>>>>>> JM
 };
 
 #endif // COBJECT_H

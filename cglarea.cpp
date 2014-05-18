@@ -154,6 +154,7 @@ void CGLArea::mouvementBoule()
     boule->getPosition(&_poPositionAvant1);
     float Y=_poPositionAvant1.fGetY();
     float Z=_poPositionAvant1.fGetZ();
+<<<<<<< HEAD
     CVector3 _poDepla;
     boule->getDeplacement(&_poDepla);
     float VY = _poDepla.fGetY();
@@ -176,6 +177,12 @@ void CGLArea::mouvementBoule()
             }
         }
     }
+=======
+    CVector3 _poVitesse;
+    boule->vGetVecteurVitesse(&_poVitesse);
+    float VY = _poVitesse.fGetY();
+    float VZ = _poVitesse.fGetZ();
+>>>>>>> JM
 
     int i=0;
     if (palet->detectionCollision(&_poPositionAvant1,&i)==true)
@@ -204,11 +211,16 @@ void CGLArea::mouvementBoule()
             }
     }
 
+<<<<<<< HEAD
 
     boule->setDepla(VY,VZ);
 
     float deplacementY = Y+ VY;
     float deplacementZ = Z + VZ;
+=======
+    float deplacementY = Y + VY ;
+    float deplacementZ = Z + VZ ;
+>>>>>>> JM
     CVector3 _poPositionMove1(2,deplacementY,deplacementZ);
     boule->setPosition(&_poPositionMove1);
 
