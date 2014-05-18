@@ -15,8 +15,8 @@ private:
     QPoint lastPosWheel;
     QPoint lastPosBoule;
     CModel* m_poModel;
-    CObject* palet;
-    CObject* boule;
+    CPalet* palet;
+    CSphere* boule;
     int avantDepla;
 public:
     CGLArea(QWidget *parent = 0);

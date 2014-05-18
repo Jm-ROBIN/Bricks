@@ -12,8 +12,13 @@
 CSphere::CSphere(int _id) : CObject(_id)
 {
     vecteurDeplacement.vSetX(0);
-    vecteurDeplacement.vSetY(-0.15);
-    vecteurDeplacement.vSetZ(-0.15);
+    vecteurDeplacement.vSetY(-0.10);
+    vecteurDeplacement.vSetZ(-0.10);
+
+    scale->vSetX(0.5);
+    scale->vSetY(0.5);
+    scale->vSetZ(0.5);
+
     vGenerateData();
 }
 
@@ -185,4 +190,11 @@ void CSphere::getDeplacement(CVector3* _poDepla)
     _poDepla->vSetX(vecteurDeplacement.fGetX());
     _poDepla->vSetY(vecteurDeplacement.fGetY());
     _poDepla->vSetZ(vecteurDeplacement.fGetZ());
+}
+
+void CSphere::getScale(CVector3 *_poScale)
+{
+   _poScale->vSetX(scale->fGetX());
+   _poScale->vSetY(scale->fGetY());
+   _poScale->vSetZ(scale->fGetZ());
 }

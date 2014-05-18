@@ -1,6 +1,8 @@
 #include "cpalet.h"
 #include <QDebug>
 
+#include <math.h>
+
 
 
 static const int m_iNbFaces = 6;
@@ -27,7 +29,9 @@ static const float m_fVertices[8][3] = {
 
 CPalet::CPalet(int identifiant) : CObject(identifiant)
 {
-
+    scale->vSetX(1.0);
+    scale->vSetY(2.0);
+    scale->vSetZ(2.0);
 }
 
 CPalet::~CPalet()
@@ -95,4 +99,30 @@ void CPalet::vGetSideColor(int _face, CVector3 *_poColor)
         _poColor->vSetZ(1.0);
         break;
     }
+}
+
+void CPalet::getScale(CVector3 *_poScale)
+{
+   _poScale->vSetX(scale->fGetX());
+   _poScale->vSetY(scale->fGetY());
+   _poScale->vSetZ(scale->fGetZ());
+}
+
+bool CPalet::detectionCollision(CVector3 *_poPosBoule, int *i)
+{
+    CVector3 positionObjet;
+    this->getPosition(&positionObjet);
+
+    double ys=_poPosBoule->fGetY();
+    double yc=positionObjet.fGetY();
+    double zs=_poPosBoule->fGetZ();
+    double zc=positionObjet.fGetZ();
+    double L=2*scale->fGetY();
+    double l=2*scale->fGetZ()*0.12;
+    if(((fabs(ys-yc))<((L/2)+0.3)) && (fabs(zs-zc))<((l/2)+0.3) )
+    {
+        return true;
+    }
+    return false;
+
 }

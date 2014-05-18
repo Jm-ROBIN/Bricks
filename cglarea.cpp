@@ -1,7 +1,7 @@
 #include "cglarea.h"
 #include <QDebug>
 #include <cmath>
-#include <glu.h>
+#include <GL/glu.h>
 #include <QMouseEvent>
 #include <CSphere.h>
 #include <QTimer>
@@ -20,7 +20,7 @@ CGLArea::CGLArea(QWidget *parent)
     //sert pour le mouvement de la boule
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(mouvementBoule()));
-    timer->start(10);
+    timer->start(1);
 }
 CGLArea::~CGLArea()
 {
@@ -110,29 +110,29 @@ void CGLArea::mousePressEvent(QMouseEvent *event)
 void CGLArea::mouseMoveEvent(QMouseEvent *event)
 {
     //determination du petit mouvement de souris
-        int dx = event->x() - lastPos.x();
-        int dy = event->y() - lastPos.y();
+    int dx = event->x() - lastPos.x();
+    int dy = event->y() - lastPos.y();
 
-        //transcription des mouvements de la souris a ceux de la camera autour de l'objet
-        if (event->buttons() & Qt::LeftButton) {
+    //transcription des mouvements de la souris a ceux de la camera autour de l'objet
+    if (event->buttons() & Qt::LeftButton) {
 
-            m_elevation-=0.01*dy;
-            m_azimuth-=0.01*dx;
-            if(m_elevation<=-1.57)
-            {
-                m_elevation=-1.57;
-            }
-            if(m_elevation>=1.57)
-            {
-                m_elevation=1.57;
-            }
-        } else if (event->buttons() & Qt::RightButton) {
+        m_elevation-=0.01*dy;
+        m_azimuth-=0.01*dx;
+        if(m_elevation<=-1.57)
+        {
+            m_elevation=-1.57;
         }
+        if(m_elevation>=1.57)
+        {
+            m_elevation=1.57;
+        }
+    } else if (event->buttons() & Qt::RightButton) {
+    }
 
-        lastPos = event->pos();
+    lastPos = event->pos();
 
-        updateCamera();
-        updateGL();
+    updateCamera();
+    updateGL();
 }
 
 void CGLArea::wheelEvent ( QWheelEvent * event )
@@ -157,12 +157,58 @@ void CGLArea::mouvementBoule()
     CVector3 _poDepla;
     boule->getDeplacement(&_poDepla);
     float VY = _poDepla.fGetY();
-    //float VZ = _poDepla.fGetZ();
+    float VZ = _poDepla.fGetZ();
+
+    for (int i=0;i<m_poModel->getNbBords();i++)
+    {
+        CBord* current=m_poModel->getBordsobject(i);
+        if (i==1 || i ==2)
+        {
+            if(current->detectionCollision(&_poPositionAvant1,0)==true)
+            {
+                VY=-VY ;
+            }
+        }
+        else {
+            if(current->detectionCollision(&_poPositionAvant1,0)==true)
+            {
+                VZ=-VZ ;
+            }
+        }
+    }
+
+    int i=0;
+    if (palet->detectionCollision(&_poPositionAvant1,&i)==true)
+    {
+       /* qDebug()<<"entrer";
+        qDebug()<<i;
+        if (i==1)
+        {*/
+            VZ=-VZ;
+       /* }
+        else
+        {
+            if (i==2)
+            {
+                VZ=-VZ;
+            }
+        }*/
+    }
+
+    for (int i=0;i<m_poModel->getNbTableau();i++)
+    {
+        CObject* current=m_poModel->getTableauobject(i);
+            if(current->detectionCollision(&_poPositionAvant1,0)==true)
+            {
+                VZ=-VZ ;
+            }
+    }
 
 
+    boule->setDepla(VY,VZ);
 
-    float deplacementY = Y + VY ;
-    float deplacementZ = Z;
+    float deplacementY = Y+ VY;
+    float deplacementZ = Z + VZ;
     CVector3 _poPositionMove1(2,deplacementY,deplacementZ);
     boule->setPosition(&_poPositionMove1);
 
@@ -174,7 +220,6 @@ void CGLArea::mouvementPalet(int x)
 {
     int dx = 1.2*(-((x-125)/13.8)) - lastPosBoule.x();
 
-    //int dy = 0.01*y - lastPos.y();
 
     CVector3 _poPositionAvant;
     palet->getPosition(&_poPositionAvant);
@@ -199,7 +244,9 @@ void CGLArea::afficherBoule()
     boule->getPosition(&_poPosition2);
     glLoadIdentity ();
     glTranslatef (_poPosition2.fGetX(),_poPosition2.fGetY(),_poPosition2.fGetZ());
-    glScalef (0.5, 0.5, 0.5);
+    CVector3 _poScale;
+    boule->getScale(&_poScale);
+    glScalef (_poScale.fGetX(),_poScale.fGetY(),_poScale.fGetZ());
     for(int j=0;j<boule->iGetNbFaces();j++)
     {
         //par parcours de chaque face on trace chaque cube en allant chercher les coordonnées des vertex des cette face ainsi que sa couleur
@@ -227,7 +274,10 @@ void CGLArea::afficherPalet()
     palet->getPosition(&_poPosition3);
     glLoadIdentity ();
     glTranslatef (_poPosition3.fGetX(),_poPosition3.fGetY(),_poPosition3.fGetZ());
-    glScalef (2.0, 2.0, 2.0);
+
+    CVector3 _poScale;
+    palet->getScale(&_poScale);
+    glScalef (_poScale.fGetX(),_poScale.fGetY(),_poScale.fGetZ());
     for(int j=0;j<palet->iGetNbFaces();j++)
     {
         //par parcours de chaque face on trace chaque cube en allant chercher les coordonnées des vertex des cette face ainsi que sa couleur
@@ -281,7 +331,10 @@ void CGLArea::AfficherCubes()
         glTranslatef (_poPosition.fGetX(),_poPosition.fGetY(),_poPosition.fGetZ());
         //rotation predefinie
         //glRotatef(120*i, 1.0, 1.0, 0.0);
-        glScalef (1.0, 1.0, 1.0);
+
+        CVector3 _poScale;
+        current->getScale(&_poScale);
+        glScalef (_poScale.fGetX(),_poScale.fGetY(),_poScale.fGetZ());
 
 
         for(int j=0;j<current->iGetNbFaces();j++)
@@ -325,10 +378,12 @@ void CGLArea::afficherBords()
 
         glLoadIdentity ();
         glTranslatef (_poPosition.fGetX(),_poPosition.fGetY(),_poPosition.fGetZ());
+        CVector3 _poScale;
+        current->getScale(&_poScale);
         if (i==1 || i ==2)
-            glScalef (1.0, 0.5, 12);
+            glScalef (_poScale.fGetX(),_poScale.fGetZ(),_poScale.fGetY());
         else
-            glScalef (1.0, 12, 0.5);
+            glScalef (_poScale.fGetX(),_poScale.fGetY(),_poScale.fGetZ());
 
 
 
