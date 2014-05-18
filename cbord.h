@@ -12,7 +12,6 @@ public:
     virtual int iGetNbVertices(int _iFace);
     virtual void vGetVertex(int _iFace, int _iVertex, CVector3* _poVect);
     virtual void vGetSideColor(int _face, CVector3* _poColor);
-    virtual void getDeplacement(CVector3* _poDepla){}
     void vGetVertexAlt(int _iFace, int _iVertex, CVector3 *_poVect);
 
     bool detectionCollision(CSphere* boule);

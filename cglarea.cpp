@@ -154,15 +154,15 @@ void CGLArea::mouvementBoule()
     boule->getPosition(&_poPositionAvant1);
     float Y=_poPositionAvant1.fGetY();
     float Z=_poPositionAvant1.fGetZ();
-    CVector3 _poDepla;
-    boule->getDeplacement(&_poDepla);
-    float VY = _poDepla.fGetY();
-    //float VZ = _poDepla.fGetZ();
+    CVector3 _poVitesse;
+    boule->vGetVecteurVitesse(&_poVitesse);
+    float VY = _poVitesse.fGetY();
+    float VZ = _poVitesse.fGetZ();
 
 
 
     float deplacementY = Y + VY ;
-    float deplacementZ = Z;
+    float deplacementZ = Z + VZ ;
     CVector3 _poPositionMove1(2,deplacementY,deplacementZ);
     boule->setPosition(&_poPositionMove1);
 
