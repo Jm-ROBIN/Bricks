@@ -22,6 +22,7 @@ public:
     ~CView();
     void setControl(CControler* ctrl) {controler=ctrl;}
     void setModel(CModel* mod);
+    CGLArea* getArea() {return zoneTracage;}
 
 public slots :
     void vAddFunction();

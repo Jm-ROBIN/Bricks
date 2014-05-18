@@ -13,7 +13,6 @@
 /*---------------------------------------------------------------------------*/
 CSphere::CSphere(int _id) : CObject(_id)
 {
-<<<<<<< HEAD
     vecteurDeplacement.vSetX(0);
     vecteurDeplacement.vSetY(-0.10);
     vecteurDeplacement.vSetZ(-0.10);
@@ -22,11 +21,6 @@ CSphere::CSphere(int _id) : CObject(_id)
     scale->vSetY(0.5);
     scale->vSetZ(0.5);
 
-=======
-    vecteurVitesse.vSetX(0);        //Vitesse en profondeur
-    vecteurVitesse.vSetY(-0.15);    //Vitesse Horizontale
-    vecteurVitesse.vSetZ(-0.15);    //Vitesse Verticale
->>>>>>> JM
     vGenerateData();
 }
 

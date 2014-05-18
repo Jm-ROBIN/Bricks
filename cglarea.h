@@ -35,6 +35,7 @@ public:
     void afficherPalet();
     void AfficherCubes();
     void afficherBords();
+    void reinitinialiser();
 protected:
     void initializeGL();
     void paintGL();

@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
     CModel oModel;
     CView oView;
     CControler oCtrl(&oModel);
+    oCtrl.cglMaj(oView.getArea());
 
     oView.setControl(&oCtrl);
     oView.setModel(&oModel);
