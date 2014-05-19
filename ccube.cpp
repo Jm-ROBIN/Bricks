@@ -1,6 +1,7 @@
 #include "ccube.h"
 #include <QDebug>
 #include <cmath>
+#include <rectangle.h>
 
 
 
@@ -102,9 +103,9 @@ void CCube::vGetSideColor(int _face, CVector3 *_poColor)
 
 void CCube::getScale(CVector3 *_poScale)
 {
-   _poScale->vSetX(scale->fGetX());
-   _poScale->vSetY(scale->fGetY());
-   _poScale->vSetZ(scale->fGetZ());
+    _poScale->vSetX(scale->fGetX());
+    _poScale->vSetY(scale->fGetY());
+    _poScale->vSetZ(scale->fGetZ());
 }
 
 
@@ -113,16 +114,23 @@ bool CCube::detectionCollision(CVector3 *_poPosBoule, int *i)
     CVector3 positionObjet;
     this->getPosition(&positionObjet);
 
-    double ys=_poPosBoule->fGetY();
-    double yc=positionObjet.fGetY();
-    double zs=_poPosBoule->fGetZ();
-    double zc=positionObjet.fGetZ();
-    double L=2*scale->fGetY();
-    double l=2*scale->fGetZ()*0.12;
-    if(((fabs(ys-yc))<((L/2)+0.3)) && (fabs(zs-zc))<((l/2)+0.3) )
+    float ys=_poPosBoule->fGetY();
+    float yc=positionObjet.fGetY();
+    float zs=_poPosBoule->fGetZ();
+    float zc=positionObjet.fGetZ();
+    float L=2*scale->fGetY()*0.75;
+    float l=2*scale->fGetZ()*0.5;
+
+    Rectangle rect(yc,zc,L+0.48,l+0.48);
+    if (rect.contains(ys,zs))
     {
+        if (fabs(ys-yc)<((L/2)-0.2)) {
+            *i=0;
+        }
+        else {
+            *i=1;
+        }
         return true;
     }
     return false;
-
 }

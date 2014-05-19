@@ -17,6 +17,7 @@ CGLArea::CGLArea(QWidget *parent)
     m_elevation=0;
     m_azimuth=0;
     avantDepla=0;
+
     //sert pour le mouvement de la boule
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(mouvementBoule()));
@@ -150,31 +151,44 @@ void CGLArea::mouseReleaseEvent(QMouseEvent *event)
 
 void CGLArea::mouvementBoule()
 {
-    CVector3 _poPositionAvant1;
-    boule->getPosition(&_poPositionAvant1);
-    float Y=_poPositionAvant1.fGetY();
-    float Z=_poPositionAvant1.fGetZ();
+    CVector3 PositionActuelle(0,0,0);
+    CVector3 NextPosition(0,0,0);
+    boule->getPosition(&PositionActuelle);
+    boule->vGetNextPosition(&NextPosition);
 
-    CVector3 _poVitesse;
-    boule->vGetVecteurVitesse(&_poVitesse);
-    float VY = _poVitesse.fGetY();
-    float VZ = _poVitesse.fGetZ();
-
-    for (int i=0;i<m_poModel->getNbTableau();i++)
+    int var = 0;
+    int sensCollision = -1;
+    bool collision = false;
+    while ((collision == false) && (var < m_poModel->getNbTableau()))
     {
-        CObject* current=m_poModel->getTableauobject(i);
-            if(current->detectionCollision(&_poPositionAvant1,0)==true)
-            {
-                VZ=-VZ ;
-            }
+        CObject* currentCube = m_poModel->getTableauobject(var);
+        collision = currentCube->detectionCollision(&NextPosition,&sensCollision);
+        var++;
+    }
+    if (collision) {
+        boule->vRebondir(sensCollision);
+        m_poModel->detruireCube(var-1);
+        updateGL();
+    }
+    boule->vGetNextPosition(&NextPosition);
+
+    sensCollision = -1;
+    if (palet->detectionCollision(&NextPosition,&sensCollision))
+    {
+        boule->vRebondir(sensCollision);
     }
 
+    if (NextPosition.fGetY()<-10.666666666)
+        boule->vRebondir(1);
+    if (NextPosition.fGetY()>10.666666666)
+        boule->vRebondir(1);
+    if (NextPosition.fGetZ()<-10.666666666)
+        boule->vRebondir(0);
+    if (NextPosition.fGetZ()>10.666666666)
+        boule->vRebondir(0);
 
-    float deplacementY = Y + VY ;
-    float deplacementZ = Z + VZ ;
-    CVector3 _poPositionMove1(2,deplacementY,deplacementZ);
-    boule->setPosition(&_poPositionMove1);
-
+    boule->setPosition(&NextPosition);
+    boule->getPosition(&PositionActuelle);
     updateGL();
 
 }
@@ -285,6 +299,7 @@ void CGLArea::AfficherCubes()
                 _poColorVerif.vSetX(_poColorVerif.fGetX()+0.2f);
                 _poColorVerif.vSetY(_poColorVerif.fGetY()-0.1f);
                 _poColorVerif.vSetZ(_poColorVerif.fGetZ()-0.2f);
+
                 _poPosition.vSetX(_poPosition.fGetX()-1);
                 deja=true;
             }

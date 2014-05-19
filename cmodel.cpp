@@ -1,5 +1,6 @@
 #include "cmodel.h"
 #include<QDebug>
+
 CModel::CModel()
 {
     boule=new CSphere(0);
@@ -76,7 +77,7 @@ int CModel::getNbTableau()
 
 CBord* CModel::getBordsobject(int i)
 {
-  return bords[i];
+    return bords[i];
 }
 
 int CModel::getNbBords()
@@ -101,5 +102,37 @@ float CModel::fGetRandomZ()
     float Div = 0.75;
     float result = ((float) (qrand() % ((High + 1) - Low) + Low)) / Div;
     return result;
+}
+
+void CModel::detruireCube(int var){
+    CObject* toRemove = tableau[var];
+    CVector3 positionToRemove;
+    toRemove->getPosition(&positionToRemove);
+
+    for (int i = 0; i < tableau.size(); ++i) {
+        CObject* current = tableau[i];
+        CVector3 positionCurrent;
+        current->getPosition(&positionCurrent);
+        if ((positionCurrent.fGetY()==positionToRemove.fGetY()) && (positionCurrent.fGetZ()==positionToRemove.fGetZ()))
+        {
+            if (positionCurrent.fGetX()>positionToRemove.fGetX())
+            {
+                var = i;
+                //toRemove=current;
+            }
+        }
+    }
+
+    /*int j=0;
+    bool found = false;
+    while (j<tableau.size() && found == false)
+    {
+        CObject* current = tableau.at(j);
+        if (current==toRemove){
+                tableau.removeAt(j);
+        }
+        found = true;
+    }*/
+    tableau.removeAt(var);
 }
 

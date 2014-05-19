@@ -13,9 +13,9 @@
 /*---------------------------------------------------------------------------*/
 CSphere::CSphere(int _id) : CObject(_id)
 {
-    vecteurDeplacement.vSetX(0);
-    vecteurDeplacement.vSetY(-0.10);
-    vecteurDeplacement.vSetZ(-0.10);
+    vecteurVitesse.vSetX(0);
+    vecteurVitesse.vSetY(-0.10);
+    vecteurVitesse.vSetZ(-0.10);
 
     scale->vSetX(0.5);
     scale->vSetY(0.5);
@@ -196,12 +196,12 @@ void CSphere::vGetVecteurVitesse(CVector3* _poVitesse)
 
 void CSphere::vGetNextPosition(CVector3 *_poPosition)
 {
-    int X=position->fGetX();
-    int Y=position->fGetY();
-    int Z=position->fGetZ();
-    _poPosition->vSetX(X+vecteurVitesse.fGetZ());
-    _poPosition->vSetY(Y+vecteurVitesse.fGetY());
-    _poPosition->vSetZ(Z+vecteurVitesse.fGetZ());
+    float x=position->fGetX();
+    float y=position->fGetY();
+    float z=position->fGetZ();
+    _poPosition->vSetX(x+vecteurVitesse.fGetX());
+    _poPosition->vSetY(y+vecteurVitesse.fGetY());
+    _poPosition->vSetZ(z+vecteurVitesse.fGetZ());
 }
 
 void CSphere::vRebondir(int _Face)

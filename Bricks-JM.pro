@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     CShpere.cpp \
         cpalet.cpp \
     cbord.cpp \
-	webcamwindow.cpp
+        webcamwindow.cpp\
+    rectangle.cpp
 
 HEADERS  += cview.h \
     ccontroler.h \
@@ -36,7 +37,8 @@ HEADERS  += cview.h \
 	CSphere.h \
         cpalet.h \
     cbord.h \
-	webcamwindow.h
+        webcamwindow.h\
+    rectangle.h
 
 INCLUDEPATH +=$$(OPENCV_DIR)\include
 
