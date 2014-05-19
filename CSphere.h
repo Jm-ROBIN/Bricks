@@ -26,7 +26,6 @@ public:
     virtual int iGetNbVertices(int _iFace);
     virtual void vGetVertex(int _iFace, int _iVertex, CVector3* _poVect);
     virtual void vGetSideColor(int _face, CVector3* _poColor);
-    virtual void getDeplacement(CVector3 *_poDepla);
     virtual void getScale(CVector3* _poScale);
     virtual bool detectionCollision(CVector3* _poPosBoule, int* i) {}
     int iGetVitesse() {return iVitesse;}
@@ -34,8 +33,6 @@ public:
     void vGetNextPosition(CVector3 *_poPosition);
     void vSetVitesse(float _fAngle);
     void vRebondir(int _Face);
-
-    //virtual int         iIsPicked(CVector3* _poOrigin, CVector3* _poDir, CVector3* _poIntersection, int* _iPickedFace);
 };
 
 #endif // CSPHERE_H

@@ -58,7 +58,7 @@ void CView::setModel(CModel *mod)
 void CView::vAddFunction()
 {
     // Dire au controleur d'ajouter un element
-    for (int i = 0; i < 30; ++i) {
+    for (int i = 0; i < 15; ++i) {
         controler->Add();
         // Mettre a jour la polist
         zoneTracage->updateGL();
@@ -70,7 +70,7 @@ void CView::vDelFunction()
     if (model->getNbTableau()!=0)
     {
         // Dire au controleur de supprimer un element
-        for (int i = 0; i < 60; ++i) {
+        for (int i = 0; i < 30; ++i) {
             controler->Del();
             // Mettre a jour la polist
             zoneTracage->updateGL();
