@@ -14,8 +14,13 @@
 CSphere::CSphere(int _id) : CObject(_id)
 {
     vecteurVitesse.vSetX(0);
+<<<<<<< HEAD
     vecteurVitesse.vSetY(-0.10);
     vecteurVitesse.vSetZ(-0.10);
+=======
+    vecteurVitesse.vSetY(-0.25);
+    vecteurVitesse.vSetZ(-0.25);
+>>>>>>> JM
 
     scale->vSetX(0.5);
     scale->vSetY(0.5);
@@ -215,6 +220,15 @@ void CSphere::vRebondir(int _Face)
         vecteurVitesse.vSetY(-vecteurVitesse.fGetY());
         break;
     }
+}
+
+void CSphere::vSetVecteurVitesse(float _fAngle)
+{
+    float Vx = 0;
+    float Vy = -(float)iGetVitesse()*sin(_fAngle*(180.0/3.14159265359));
+    float Vz = (float)iGetVitesse()*cos(_fAngle*(180.0/3.14159265359));
+    CVector3 Vitesse(Vx,Vy,Vz);
+    vecteurVitesse.vSet(Vx,Vy,Vz);
 }
 
 void CSphere::getScale(CVector3 *_poScale)

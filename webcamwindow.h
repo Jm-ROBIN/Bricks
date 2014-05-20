@@ -13,13 +13,13 @@ class WebCamWindow : public QWidget
 public:
     WebCamWindow(QWidget *parent = 0);
     ~WebCamWindow();
-    void displayImage();
+    void displayImage(QLabel* _destination);
     void detectHand(int x=125, int y=145);
     void trackHand();
     int getX() { return x;}
     int getY() { return y;}
 
-private slots:
+public slots:
     void aquire();
     void startWebCam();
 

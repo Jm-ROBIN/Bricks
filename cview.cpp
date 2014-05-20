@@ -19,12 +19,12 @@ CView::CView(QWidget *parent)
     zoneTracage = new CGLArea();
 
     //tacking
-    camTrack = new WebCamWindow(parent);
-    camTrack->show();
+    //camTrack = new WebCamWindow(parent);
+    //camTrack->show();
 
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(bougerPalet()));
-    timer->start(10);
+    QTimer *timerPalet = new QTimer(this);
+    connect(timerPalet, SIGNAL(timeout()), this, SLOT(bougerPalet()));
+    timerPalet->start(5);
 
     //mise en place des interactions boutons avec l'utilisateur
     connect(oAddBtn, SIGNAL(clicked()), this, SLOT(vAddFunction()));
@@ -41,7 +41,7 @@ CView::CView(QWidget *parent)
     oBtnVLayout->addLayout(oBtnRLayout);
 
     setLayout(oBtnVLayout);
-    setWindowTitle(tr("TP 1"));
+    setWindowTitle(tr("Bricks"));
 }
 
 CView::~CView()
