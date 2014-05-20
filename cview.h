@@ -2,7 +2,8 @@
 #define CVIEW_H
 
 #include <QWidget>
-#include<QListWidget>
+#include <QListWidget>
+#include <QLabel>
 #include "ccontroler.h"
 #include "cmodel.h"
 #include "ccube.h"
@@ -16,7 +17,9 @@ class CView : public QWidget
     CControler* controler;
     CModel* model;
     CGLArea *zoneTracage;
+
     WebCamWindow * camTrack;
+
 public:
     CView(QWidget *parent = 0);
     ~CView();

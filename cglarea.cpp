@@ -19,9 +19,9 @@ CGLArea::CGLArea(QWidget *parent)
     avantDepla=0;
 
     //sert pour le mouvement de la boule
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(mouvementBoule()));
-    timer->start(1);
+    QTimer *timerMvt = new QTimer(this);
+    connect(timerMvt, SIGNAL(timeout()), this, SLOT(mouvementBoule()));
+    timerMvt->start(50);
 }
 CGLArea::~CGLArea()
 {
@@ -159,19 +159,33 @@ void CGLArea::mouvementBoule()
     int var = 0;
     int sensCollision = -1;
     bool collision = false;
-    while ((collision == false) && (var < m_poModel->getNbTableau()))
-    {
+    while ((collision == false) && (var < m_poModel->getNbTableau())){
         CObject* currentCube = m_poModel->getTableauobject(var);
         collision = currentCube->detectionCollision(&NextPosition,&sensCollision);
         var++;
     }
-    if (collision) {
+    if (collision){
         boule->vRebondir(sensCollision);
-        m_poModel->detruireCube(var);
+        m_poModel->detruireCube(var-1);
         updateGL();
     }
-    boule->vGetNextPosition(&NextPosition);
 
+    else{
+        if (palet->detectionCollision(&NextPosition,&sensCollision))
+        {
+            CVector3 posPalet;
+            palet->getPosition(&posPalet);
+            float fEcart = posPalet.fGetY() - NextPosition.fGetY();
+            float fAngle = (120.0/4.0)*fabs(fEcart);
+            if (fEcart<0){
+                boule->vSetVecteurVitesse(fAngle);
+            }
+            else {
+                boule->vSetVecteurVitesse(-fAngle);
+            }
+        }
+    }
+    boule->vGetNextPosition(&NextPosition);
     if (NextPosition.fGetY()<-10.666666666)
         boule->vRebondir(1);
     if (NextPosition.fGetY()>10.666666666)
@@ -196,8 +210,7 @@ void CGLArea::mouvementPalet(int x)
     palet->getPosition(&_poPositionAvant);
     float deplacement = 0.1*dx + _poPositionAvant.fGetY();
 
-    if (deplacement<9.5 && deplacement>-9.5)
-    {
+    if (deplacement<9.5 && deplacement>-9.5){
         CVector3 _poPositionMove(2,deplacement,9);
         palet->setPosition(&_poPositionMove);
     }

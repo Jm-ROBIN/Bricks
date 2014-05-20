@@ -105,12 +105,12 @@ float CModel::fGetRandomZ()
 }
 
 void CModel::detruireCube(int var){
-    CObject* toRemove = tableau.at(var);
+    CObject* toRemove = tableau[var];
     CVector3 positionToRemove;
     toRemove->getPosition(&positionToRemove);
 
     for (int i = 0; i < tableau.size(); ++i) {
-        CObject* current = tableau.at(i);
+        CObject* current = tableau[i];
         CVector3 positionCurrent;
         current->getPosition(&positionCurrent);
         if ((positionCurrent.fGetY()==positionToRemove.fGetY()) && (positionCurrent.fGetZ()==positionToRemove.fGetZ()))
@@ -118,12 +118,12 @@ void CModel::detruireCube(int var){
             if (positionCurrent.fGetX()>positionToRemove.fGetX())
             {
                 var = i;
-                toRemove=current;
+                //toRemove=current;
             }
         }
     }
 
-    int j=0;
+    /*int j=0;
     bool found = false;
     while (j<tableau.size() && found == false)
     {
@@ -132,6 +132,7 @@ void CModel::detruireCube(int var){
                 tableau.removeAt(j);
         }
         found = true;
-    }
+    }*/
+    tableau.removeAt(var);
 }
 

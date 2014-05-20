@@ -1,6 +1,7 @@
 #include "cpalet.h"
 #include <QDebug>
 
+#include <rectangle.h>
 #include <math.h>
 
 
@@ -113,16 +114,14 @@ bool CPalet::detectionCollision(CVector3 *_poPosBoule, int *i)
     CVector3 positionObjet;
     this->getPosition(&positionObjet);
 
-    double ys=_poPosBoule->fGetY();
-    double yc=positionObjet.fGetY();
-    double zs=_poPosBoule->fGetZ();
-    double zc=positionObjet.fGetZ();
-    double L=2*scale->fGetY();
-    double l=2*scale->fGetZ()*0.12;
-    if(((fabs(ys-yc))<((L/2)+0.3)) && (fabs(zs-zc))<((l/2)+0.3) )
-    {
-        return true;
-    }
-    return false;
+    float ys=_poPosBoule->fGetY();
+    float yc=positionObjet.fGetY();
+    float zs=_poPosBoule->fGetZ();
+    float zc=positionObjet.fGetZ();
+    float L=2.0*scale->fGetY()*0.4;
+    float l=2.0*scale->fGetZ()*1.2;
 
+    Rectangle rect(yc,zc-0.1,L,0.25);
+    *i=0;
+    return rect.contains(ys,zs);
 }

@@ -118,19 +118,17 @@ bool CCube::detectionCollision(CVector3 *_poPosBoule, int *i)
     float yc=positionObjet.fGetY();
     float zs=_poPosBoule->fGetZ();
     float zc=positionObjet.fGetZ();
-    float L=2*scale->fGetY()*0.75;
-    float l=2*scale->fGetZ()*0.5;
+    float L=2.0*scale->fGetY()*0.75;
+    float l=2.0*scale->fGetZ()*0.5;
 
     Rectangle rect(yc,zc,L+0.6,l+0.6);
     if (rect.contains(ys,zs))
     {
-        if (fabs(ys-yc)<((L/2))) {
+        if (fabs(ys-yc)<((L/2.0)-0.25)) {
             *i=0;
-           qDebug()<<"ici";
         }
         else {
             *i=1;
-            qDebug()<<"la";
         }
         return true;
     }

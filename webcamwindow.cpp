@@ -43,7 +43,7 @@ WebCamWindow::~WebCamWindow()
     delete webcam;
 }
 
-void WebCamWindow::displayImage()
+void WebCamWindow::displayImage(QLabel *_destination)
 {
     if (image.data!=NULL)
     {
@@ -54,9 +54,9 @@ void WebCamWindow::displayImage()
         QImage img= QImage((const unsigned char*)(image.data),
                            image.cols,image.rows,QImage::Format_RGB888);
         // display on label
-        label->setPixmap(QPixmap::fromImage(img));
+        _destination->setPixmap(QPixmap::fromImage(img));
         // resize the label to fit the image
-        label->resize(label->pixmap()->size());
+        _destination->resize(label->pixmap()->size());
     }
     else QMessageBox(QMessageBox::Critical,tr("Error"),tr("Image is void")).exec();
 }
@@ -71,7 +71,7 @@ void WebCamWindow::aquire()
     {
         trackHand();
     }
-    displayImage();
+    displayImage(label);
 }
 
 void WebCamWindow::startWebCam()
