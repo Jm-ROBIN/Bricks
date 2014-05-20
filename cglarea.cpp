@@ -151,28 +151,6 @@ void CGLArea::mouseReleaseEvent(QMouseEvent *event)
 
 int CGLArea::onDoitStopper()
 {
-<<<<<<< HEAD
-    CVector3 PositionActuelle(0,0,0);
-    CVector3 NextPosition(0,0,0);
-    boule->getPosition(&PositionActuelle);
-    boule->vGetNextPosition(&NextPosition);
-
-    int var = 0;
-    int sensCollision = -1;
-    bool collision = false;
-<<<<<<< HEAD
-    while ((collision == false) && (var < m_poModel->getNbTableau()))
-    {
-        CObject* currentCube = m_poModel->getTableauobject(var);
-        collision = currentCube->detectionCollision(&NextPosition,&sensCollision);
-        var++;
-    }
-    if (collision) {
-        boule->vRebondir(sensCollision);
-        m_poModel->detruireCube(var-1);
-        updateGL();
-    }
-=======
     if(m_poModel->balleEnBas())
         return 1;
     else{
@@ -207,7 +185,6 @@ void CGLArea::mouvementBoule()
         m_poModel->detruireCube(var-1);
         updateGL();
     }
->>>>>>> origin/Thib
     boule->vGetNextPosition(&NextPosition);
 
     sensCollision = -1;
@@ -216,26 +193,13 @@ void CGLArea::mouvementBoule()
         boule->vRebondir(sensCollision);
     }
 
-<<<<<<< HEAD
-=======
-    while ((collision == false) && (var < m_poModel->getNbTableau())){
-        CObject* currentCube = m_poModel->getTableauobject(var);
-        collision = currentCube->detectionCollision(&NextPosition,&sensCollision);
-        var++;
-    }
-    if (collision){
-        boule->vRebondir(sensCollision);
-        m_poModel->detruireCube(var-1);
-        updateGL();
-    }
-
     else{
         if (palet->detectionCollision(&NextPosition,&sensCollision))
         {
             CVector3 posPalet;
             palet->getPosition(&posPalet);
             float fEcart = posPalet.fGetY() - NextPosition.fGetY();
-            float fAngle = (120.0/4.0)*fabs(fEcart);
+            float fAngle = (120.0/8.0)*fabs(fEcart);
             if (fEcart<0){
                 boule->vSetVecteurVitesse(fAngle);
             }
@@ -245,9 +209,7 @@ void CGLArea::mouvementBoule()
         }
     }
     boule->vGetNextPosition(&NextPosition);
->>>>>>> JM
-=======
->>>>>>> origin/Thib
+
     if (NextPosition.fGetY()<-10.666666666)
         boule->vRebondir(1);
     if (NextPosition.fGetY()>10.666666666)
@@ -460,9 +422,4 @@ void CGLArea::afficherBords()
         glFlush();
 
     }
-}
-
-void CGLArea::demarrer()
-{
-
 }

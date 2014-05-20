@@ -10,7 +10,7 @@ class CSphere : public CObject
 private:
     QVector<CVector3>   m_oVertices;
     QVector<CVector3>   m_oFaces;
-    int iVitesse;
+    float fVitesse;
     CVector3 vecteurVitesse;
 
     void vGenerateData(void);
@@ -27,20 +27,13 @@ public:
     virtual void vGetVertex(int _iFace, int _iVertex, CVector3* _poVect);
     virtual void vGetSideColor(int _face, CVector3* _poColor);
     virtual void getScale(CVector3* _poScale);
-<<<<<<< HEAD
+
     virtual bool detectionCollision(CVector3* _poPosBoule, int* i) {return false;}
-    int iGetVitesse() {return iVitesse;}
+    int fGetVitesse() {return fVitesse;}
     void vGetVecteurVitesse(CVector3 *_poVitesse);
     void vGetNextPosition(CVector3 *_poPosition);
     void vSetVitesse(float _fVitesse);
     void vSetVecteurVitesse(float _fAngle);
-=======
-    virtual bool detectionCollision(CVector3* _poPosBoule, int* i) {}
-    int iGetVitesse() {return iVitesse;}
-    void vGetVecteurVitesse(CVector3 *_poVitesse);
-    void vGetNextPosition(CVector3 *_poPosition);
-    void vSetVitesse(float _fAngle);
->>>>>>> origin/Thib
     void vRebondir(int _Face);
 };
 

@@ -136,8 +136,6 @@ void CModel::detruireCube(int var){
     tableau.removeAt(var);
 }
 
-<<<<<<< HEAD
-=======
 bool CModel::plusDeBrique()
 {
     if (tableau.size()==0)
@@ -160,6 +158,13 @@ bool CModel::balleEnBas()
 
 void CModel::reinitialiser()
 {
-
+    CVector3 position(2,0,8);
+    boule->setPosition(&position);
+    boule->vSetVitesse(0);
+    boule->vSetVecteurVitesse(0);
 }
->>>>>>> origin/Thib
+
+void CModel::demarer() {
+    boule->vSetVitesse(0.3535);
+    boule->vSetVecteurVitesse(0);
+}

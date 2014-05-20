@@ -35,13 +35,8 @@ public:
     void afficherPalet();
     void AfficherCubes();
     void afficherBords();
-<<<<<<< HEAD
-    void reinitinialiser();
-=======
 
     int onDoitStopper();
-    void demarrer();
->>>>>>> origin/Thib
 protected:
     void initializeGL();
     void paintGL();

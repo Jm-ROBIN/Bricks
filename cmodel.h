@@ -30,13 +30,11 @@ public:
     int getNbBords();
 
     void detruireCube(int var);
-<<<<<<< HEAD
-=======
     bool plusDeBrique();
     bool balleEnBas();
 
     void reinitialiser();
->>>>>>> origin/Thib
+    void demarer();
 };
 
 #endif // CMODEL_H

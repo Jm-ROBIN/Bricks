@@ -14,10 +14,7 @@ public:
     void cglMaj(CGLArea* are);
     void Add();
     void Del();
-<<<<<<< HEAD
-=======
     int onStop();
->>>>>>> origin/Thib
 };
 
 #endif // CCONTROLER_H
