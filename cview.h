@@ -2,8 +2,12 @@
 #define CVIEW_H
 
 #include <QWidget>
+<<<<<<< HEAD
 #include <QListWidget>
 #include <QLabel>
+=======
+#include<QListWidget>
+>>>>>>> origin/Thib
 #include "ccontroler.h"
 #include "cmodel.h"
 #include "ccube.h"
@@ -17,9 +21,17 @@ class CView : public QWidget
     CControler* controler;
     CModel* model;
     CGLArea *zoneTracage;
+<<<<<<< HEAD
 
     WebCamWindow * camTrack;
 
+=======
+    WebCamWindow * camTrack;
+    QLabel EtatPartie;
+    int stop;
+    int vie;
+    bool demarrer;
+>>>>>>> origin/Thib
 public:
     CView(QWidget *parent = 0);
     ~CView();
@@ -27,10 +39,19 @@ public:
     void setModel(CModel* mod);
     CGLArea* getArea() {return zoneTracage;}
 
+<<<<<<< HEAD
 public slots :
     void vAddFunction();
     void vDelFunction();
     void bougerPalet();
+=======
+    void vDelFunction();
+
+public slots :
+    void vStartFunction();
+    void bougerPalet();
+    void fctTestStop();
+>>>>>>> origin/Thib
 };
 
 #endif // CVIEW_H

@@ -25,3 +25,11 @@ void CControler::Del()
 {
     model->DelItem();
 }
+<<<<<<< HEAD
+=======
+
+int CControler::onStop()
+{
+  return area->onDoitStopper();
+}
+>>>>>>> origin/Thib

@@ -136,3 +136,30 @@ void CModel::detruireCube(int var){
     tableau.removeAt(var);
 }
 
+<<<<<<< HEAD
+=======
+bool CModel::plusDeBrique()
+{
+    if (tableau.size()==0)
+        return true;
+    else {return false;}
+}
+
+bool CModel::balleEnBas()
+{
+    CVector3 positionCourante;
+    boule->getPosition(&positionCourante);
+    if (positionCourante.fGetZ()>10)
+    {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void CModel::reinitialiser()
+{
+
+}
+>>>>>>> origin/Thib

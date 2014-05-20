@@ -149,8 +149,9 @@ void CGLArea::mouseReleaseEvent(QMouseEvent *event)
 
 }
 
-void CGLArea::mouvementBoule()
+int CGLArea::onDoitStopper()
 {
+<<<<<<< HEAD
     CVector3 PositionActuelle(0,0,0);
     CVector3 NextPosition(0,0,0);
     boule->getPosition(&PositionActuelle);
@@ -171,6 +172,42 @@ void CGLArea::mouvementBoule()
         m_poModel->detruireCube(var-1);
         updateGL();
     }
+=======
+    if(m_poModel->balleEnBas())
+        return 1;
+    else{
+        if(m_poModel->plusDeBrique())
+        {
+            return 2;
+        }
+        else {
+            return 0;
+        }
+    }
+}
+
+void CGLArea::mouvementBoule()
+{
+    CVector3 PositionActuelle(0,0,0);
+    CVector3 NextPosition(0,0,0);
+    boule->getPosition(&PositionActuelle);
+    boule->vGetNextPosition(&NextPosition);
+
+    int var = 0;
+    int sensCollision = -1;
+    bool collision = false;
+    while ((collision == false) && (var < m_poModel->getNbTableau()))
+    {
+        CObject* currentCube = m_poModel->getTableauobject(var);
+        collision = currentCube->detectionCollision(&NextPosition,&sensCollision);
+        var++;
+    }
+    if (collision) {
+        boule->vRebondir(sensCollision);
+        m_poModel->detruireCube(var-1);
+        updateGL();
+    }
+>>>>>>> origin/Thib
     boule->vGetNextPosition(&NextPosition);
 
     sensCollision = -1;
@@ -179,6 +216,7 @@ void CGLArea::mouvementBoule()
         boule->vRebondir(sensCollision);
     }
 
+<<<<<<< HEAD
 =======
     while ((collision == false) && (var < m_poModel->getNbTableau())){
         CObject* currentCube = m_poModel->getTableauobject(var);
@@ -208,6 +246,8 @@ void CGLArea::mouvementBoule()
     }
     boule->vGetNextPosition(&NextPosition);
 >>>>>>> JM
+=======
+>>>>>>> origin/Thib
     if (NextPosition.fGetY()<-10.666666666)
         boule->vRebondir(1);
     if (NextPosition.fGetY()>10.666666666)
@@ -420,4 +460,9 @@ void CGLArea::afficherBords()
         glFlush();
 
     }
+}
+
+void CGLArea::demarrer()
+{
+
 }
