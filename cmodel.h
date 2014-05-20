@@ -28,6 +28,12 @@ public:
     CPalet* getPalet() {return palet;}
     CBord* getBordsobject(int i);
     int getNbBords();
+
+    void detruireCube(int var);
+    bool plusDeBrique();
+    bool balleEnBas();
+
+    void reinitialiser();
 };
 
 #endif // CMODEL_H

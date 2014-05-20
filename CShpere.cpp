@@ -6,14 +6,16 @@
 #define k_2PI       ((double)(k_PI + k_PI))	/* 2 PI */
 #define MOUSE_FACTOR ((double)0.005)
 
+#define HAUT_BAS        0
+#define GAUCHE_DROITE   1
 
 
 /*---------------------------------------------------------------------------*/
 CSphere::CSphere(int _id) : CObject(_id)
 {
-    vecteurDeplacement.vSetX(0);
-    vecteurDeplacement.vSetY(-0.10);
-    vecteurDeplacement.vSetZ(-0.10);
+    vecteurVitesse.vSetX(0);
+    vecteurVitesse.vSetY(-0.10);
+    vecteurVitesse.vSetZ(-0.10);
 
     scale->vSetX(0.5);
     scale->vSetY(0.5);
@@ -185,11 +187,34 @@ void CSphere::vGenerateData(void)
 
 }
 
-void CSphere::getDeplacement(CVector3* _poDepla)
+void CSphere::vGetVecteurVitesse(CVector3* _poVitesse)
 {
-    _poDepla->vSetX(vecteurDeplacement.fGetX());
-    _poDepla->vSetY(vecteurDeplacement.fGetY());
-    _poDepla->vSetZ(vecteurDeplacement.fGetZ());
+    _poVitesse->vSetX(vecteurVitesse.fGetX());
+    _poVitesse->vSetY(vecteurVitesse.fGetY());
+    _poVitesse->vSetZ(vecteurVitesse.fGetZ());
+}
+
+void CSphere::vGetNextPosition(CVector3 *_poPosition)
+{
+    float x=position->fGetX();
+    float y=position->fGetY();
+    float z=position->fGetZ();
+    _poPosition->vSetX(x+vecteurVitesse.fGetX());
+    _poPosition->vSetY(y+vecteurVitesse.fGetY());
+    _poPosition->vSetZ(z+vecteurVitesse.fGetZ());
+}
+
+void CSphere::vRebondir(int _Face)
+{
+    switch(_Face)
+    {
+    case HAUT_BAS:
+        vecteurVitesse.vSetZ(-vecteurVitesse.fGetZ());
+        break;
+    case GAUCHE_DROITE:
+        vecteurVitesse.vSetY(-vecteurVitesse.fGetY());
+        break;
+    }
 }
 
 void CSphere::getScale(CVector3 *_poScale)

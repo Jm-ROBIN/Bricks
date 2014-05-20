@@ -17,16 +17,23 @@ class CView : public QWidget
     CModel* model;
     CGLArea *zoneTracage;
     WebCamWindow * camTrack;
+    QLabel EtatPartie;
+    int stop;
+    int vie;
+    bool demarrer;
 public:
     CView(QWidget *parent = 0);
     ~CView();
     void setControl(CControler* ctrl) {controler=ctrl;}
     void setModel(CModel* mod);
+    CGLArea* getArea() {return zoneTracage;}
+
+    void vDelFunction();
 
 public slots :
-    void vAddFunction();
-    void vDelFunction();
+    void vStartFunction();
     void bougerPalet();
+    void fctTestStop();
 };
 
 #endif // CVIEW_H
