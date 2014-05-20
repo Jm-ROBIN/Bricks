@@ -118,19 +118,9 @@ bool CPalet::detectionCollision(CVector3 *_poPosBoule, int *i)
     float yc=positionObjet.fGetY();
     float zs=_poPosBoule->fGetZ();
     float zc=positionObjet.fGetZ();
-    float L=2*scale->fGetY()*0.4;
-    float l=2*scale->fGetZ()*1.2;
+    float L=2.0*scale->fGetY()*0.4;
+    float l=2.0*scale->fGetZ()*1.2;
 
-    Rectangle rect(yc,zc,L+0.3,l+0.3);
-    if (rect.contains(ys,zs))
-    {
-        if (fabs(ys-yc)<((l/2))) {
-            *i=0;
-        }
-        else {
-            *i=1;
-        }
-        return true;
-    }
-    return false;
+    Rectangle rect(yc,zc,L+0.6,l+0.6);
+    return (rect.contains(ys,zs));
 }

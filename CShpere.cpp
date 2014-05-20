@@ -220,8 +220,8 @@ void CSphere::vRebondir(int _Face)
 void CSphere::vSetVecteurVitesse(float _fAngle)
 {
     float Vx = 0;
-    float Vy = fVitesse*sin(_fAngle*(180.0/3.14159265359));
-    float Vz = -fVitesse*cos(_fAngle*(180.0/3.14159265359));
+    float Vy = fVitesse*sin(_fAngle);
+    float Vz = -fVitesse*cos(_fAngle);
     CVector3 Vitesse(Vx,Vy,Vz);
     vecteurVitesse.vSet(Vx,Vy,Vz);
 }

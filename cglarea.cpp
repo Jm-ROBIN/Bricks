@@ -184,22 +184,15 @@ void CGLArea::mouvementBoule()
         boule->vRebondir(sensCollision);
         m_poModel->detruireCube(var-1);
         updateGL();
+        boule->vGetNextPosition(&NextPosition);
     }
-    boule->vGetNextPosition(&NextPosition);
-
-    sensCollision = -1;
-    if (palet->detectionCollision(&NextPosition,&sensCollision))
-    {
-        boule->vRebondir(sensCollision);
-    }
-
     else{
         if (palet->detectionCollision(&NextPosition,&sensCollision))
         {
             CVector3 posPalet;
             palet->getPosition(&posPalet);
             float fEcart = posPalet.fGetY() - NextPosition.fGetY();
-            float fAngle = (120.0/8.0)*fabs(fEcart);
+            float fAngle = ((3.14159265)/(3.0*1.6)*fabs(fEcart));
             if (fEcart<0){
                 boule->vSetVecteurVitesse(fAngle);
             }
