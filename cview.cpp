@@ -10,28 +10,33 @@ CView::CView(QWidget *parent)
     : QWidget(parent)
 {
     //les boutons
-    QPushButton *oAddBtn =new QPushButton(tr("&Start"));
+    oAddBtn =new QPushButton(tr("&Lancer"));
     oAddBtn->show();
     /*QPushButton *oDelBtn =new QPushButton(tr("&Del"));
     oDelBtn->show();*/
 
     stop=0;
     vie=3;
+    niveau=1;
     demarrer=false;
+    suivant = true;
 
     //la liste d'objets (ici cube) a afficher
     zoneTracage = new CGLArea();
 
     //tacking
     camTrack = new WebCamWindow(parent);
-    camTrack->show();
 
     EtatPartie.setText("          ");
+    QString TexteVie = "Vie : " + QString::number(vie);
+    NbVie.setText(TexteVie);
+    QString TexteNiveau = "Niveau : " + QString::number(niveau);
+    Niveau.setText(TexteNiveau);
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(bougerPalet()));
     connect(timer, SIGNAL(timeout()), this, SLOT(fctTestStop()));
-    timer->start(10);
+    timer->start(50);
 
 
     //mise en place des interactions boutons avec l'utilisateur
@@ -41,6 +46,8 @@ CView::CView(QWidget *parent)
     //placement dans la fenetre des differents elements graphiques
     QHBoxLayout* oBtnRLayout = new QHBoxLayout();
     oBtnRLayout->addWidget(oAddBtn, Qt::AlignTop);
+    oBtnRLayout->addWidget(&Niveau);
+    oBtnRLayout->addWidget(&NbVie);
     oBtnRLayout->addWidget(&EtatPartie);
     oBtnRLayout->addStretch();
 
@@ -48,7 +55,12 @@ CView::CView(QWidget *parent)
     oBtnVLayout->addWidget(zoneTracage);
     oBtnVLayout->addLayout(oBtnRLayout);
 
-    setLayout(oBtnVLayout);
+    QHBoxLayout* oBtnHLayout = new QHBoxLayout();
+    oBtnHLayout->addLayout(oBtnVLayout);
+    oBtnHLayout->addWidget(camTrack);
+
+    setLayout(oBtnHLayout);
+    resize(900,500);
     setWindowTitle(tr("Bricks"));
 }
 
@@ -65,9 +77,9 @@ void CView::setModel(CModel *mod)
 
 void CView::vStartFunction()
 {
-    if(vie ==3)
+    if(vie ==3 || suivant==true)
     {
-        for (int i = 0; i < 15; ++i) {
+        for (int i = 0; i < 1; ++i) {
             controler->Add();
             // Mettre a jour la polist
             zoneTracage->updateGL();
@@ -75,6 +87,7 @@ void CView::vStartFunction()
         demarrer=true;
         model->demarer();
         EtatPartie.setText("          ");
+        suivant=false;
     }
     else
     {
@@ -95,7 +108,9 @@ void CView::fctTestStop()
     {
         model->reinitialiser();
         vie=vie-1;
-        qDebug()<<vie;
+        QString TexteVie = "Vie : " + QString::number(vie);
+        NbVie.setText(TexteVie);
+        oAddBtn->setText("Lancer");
         demarrer=false;
         stop=0;
     }
@@ -104,7 +119,12 @@ void CView::fctTestStop()
         {
             model->reinitialiser();
             EtatPartie.setText("Gagner !  ");
+            oAddBtn->setText("Niveau suivant");
+            suivant = true;
             demarrer=false;
+            niveau=niveau+1;
+            QString TexteNiveau = "Niveau : " + QString::number(niveau);
+            Niveau.setText(TexteNiveau);
             stop=0;
         }
         if(vie==0)
@@ -114,6 +134,17 @@ void CView::fctTestStop()
             demarrer=false;
             stop=0;
             vie=3;
+            QString TexteVie = "Vie : " + QString::number(vie);
+            NbVie.setText(TexteVie);
+            oAddBtn->setText("Nouvelle partie");
+            niveau=1;
+            QString TexteNiveau = "Niveau : " + QString::number(niveau);
+            Niveau.setText(TexteNiveau);
+            for (int i = 0; i < 30; ++i) {
+                controler->Del();
+                // Mettre a jour la polist
+                zoneTracage->updateGL();
+            }
         }
     }
 }

@@ -19,15 +19,15 @@ public:
     int getX() { return x;}
     int getY() { return y;}
 
+    void startWebCam();
+
 public slots:
     void aquire();
-    void startWebCam();
 
 
 private:
     int x,y;
 
-    QPushButton *webCamButton;
     QCheckBox *detectCheckBox;
     QCheckBox *trackCheckBox;
     QTimer *timer;

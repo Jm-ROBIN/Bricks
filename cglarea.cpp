@@ -1,7 +1,7 @@
 #include "cglarea.h"
 #include <QDebug>
 #include <cmath>
-#include <glu.h>
+#include <GL/glu.h>
 #include <QMouseEvent>
 #include <CSphere.h>
 #include <QTimer>
@@ -21,7 +21,7 @@ CGLArea::CGLArea(QWidget *parent)
     //sert pour le mouvement de la boule
     QTimer *timerMvt = new QTimer(this);
     connect(timerMvt, SIGNAL(timeout()), this, SLOT(mouvementBoule()));
-    timerMvt->start(50);
+    timerMvt->start(15);
 }
 CGLArea::~CGLArea()
 {

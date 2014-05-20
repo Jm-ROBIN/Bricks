@@ -10,12 +10,10 @@ using namespace cv;
 WebCamWindow::WebCamWindow(QWidget *parent)
     : QWidget(parent)
 {
-    webCamButton = new QPushButton(tr("Demarrer aquisition"));
     label = new QLabel(tr("Image"));
     detectCheckBox = new QCheckBox(tr("Detection initiale"));
     trackCheckBox= new QCheckBox(tr("Tracking"));
-    
-    connect(webCamButton, SIGNAL(clicked()), this, SLOT(startWebCam()));
+
 
     x=125;
     y=0;
@@ -24,7 +22,6 @@ WebCamWindow::WebCamWindow(QWidget *parent)
     vl1->addWidget(detectCheckBox);
     vl1->addWidget(trackCheckBox);
     QHBoxLayout *hl=new QHBoxLayout;
-    hl->addWidget(webCamButton);
     hl->addLayout(vl1);
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(label);
@@ -35,6 +32,8 @@ WebCamWindow::WebCamWindow(QWidget *parent)
     
     timer=new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(aquire()));
+
+    startWebCam();
     
 }
 
@@ -84,15 +83,11 @@ void WebCamWindow::startWebCam()
         webcam->set(CV_CAP_PROP_FRAME_HEIGHT,240);
         qDebug()<<"W : "<<webcam->get(CV_CAP_PROP_FRAME_WIDTH);
         qDebug()<<"H : "<<webcam->get(CV_CAP_PROP_FRAME_HEIGHT);
-        webCamButton->setText(tr("Arreter aquisition"));
         
     }
     else
     {
         timer->stop();
-        delete webcam;
-        webcam=0;
-        webCamButton->setText(tr("Demarrer aquisition"));
     }
 }
 
@@ -105,9 +100,9 @@ void WebCamWindow::detectHand(int _x, int _y)
     x=_x;
     y=_y;
     
-    namedWindow("Display",WINDOW_AUTOSIZE);
+    //namedWindow("Display",WINDOW_AUTOSIZE);
     cv::flip(handC,hand,1);
-    imshow("Display",hand);
+    //imshow("Display",hand);
     
 }
 
@@ -123,8 +118,8 @@ void WebCamWindow::trackHand()
     int match_method = CV_TM_SQDIFF ;
     imagePart = image(Rect(0, 140,320,100));
 
-    namedWindow("Part",WINDOW_AUTOSIZE);
-    imshow("Part",imagePart);
+    //namedWindow("Part",WINDOW_AUTOSIZE);
+    //imshow("Track WebCam",imagePart);
 
     /// Create the result matrix
     int result_cols =  imagePart.cols - hand.cols + 1;

@@ -17,10 +17,15 @@ class CView : public QWidget
     CModel* model;
     CGLArea *zoneTracage;
     WebCamWindow * camTrack;
+    QPushButton *oAddBtn;
     QLabel EtatPartie;
+    QLabel NbVie;
+    QLabel Niveau;
     int stop;
     int vie;
+    int niveau;
     bool demarrer;
+    bool suivant;
 public:
     CView(QWidget *parent = 0);
     ~CView();
