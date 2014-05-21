@@ -6,9 +6,9 @@
 
 QT       += core gui opengl
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia
 
-TARGET = TP3
+TARGET = Bricks
 TEMPLATE = app
 
 QMAKE_CXXFLAGS_WARN_OFF -= -Wunused-parameter
@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     CShpere.cpp \
         cpalet.cpp \
     cbord.cpp \
-	webcamwindow.cpp
+        webcamwindow.cpp\
+    rectangle.cpp
 
 HEADERS  += cview.h \
     ccontroler.h \
@@ -36,7 +37,8 @@ HEADERS  += cview.h \
 	CSphere.h \
         cpalet.h \
     cbord.h \
-	webcamwindow.h
+        webcamwindow.h\
+    rectangle.h
 
 INCLUDEPATH +=$$(OPENCV_DIR)\include
 

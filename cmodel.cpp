@@ -3,6 +3,7 @@
 
 CModel::CModel()
 {
+    //initialisation des differents objet graphique contenu dans le modele
     boule=new CSphere(0);
     CVector3 postion(2,0,8);
     boule->setPosition(&postion);
@@ -38,15 +39,14 @@ CModel::~CModel()
 //ajout/destruction d'un element dans le tableau, celui-ci servira a remplir la liste a afficher a l'ecran
 void CModel::AddItem()
 {
-    //il n'y a que ici qu'on precise que c'est un objet ccube, sinon le reste ne change pas
     CObject *nouveau= new CCube(tableau.size());
+    //a chaque objet on cree son simetrique par rapport a Z
     CObject *nouveau2= new CCube(tableau.size());
     //attribution d'une position aleatoire
     float Y=fGetRandom();
     float Z=fGetRandomZ();
     CVector3 postion(2,Y,Z-6);
     CVector3 postion2(2,Y,-Z-4.666666);
-    //CVector3 postion(0,0,0);
     nouveau->setPosition(&postion);
     tableau.append(nouveau);
     nouveau2->setPosition(&postion2);
@@ -70,11 +70,13 @@ CObject* CModel::getTableauobject(int i)
     return tableau[i];
 }
 
+//retourne le nombre d'objet dans le tableau
 int CModel::getNbTableau()
 {
     return tableau.size();
 }
 
+//recupere un objet bord
 CBord* CModel::getBordsobject(int i)
 {
     return bords[i];
@@ -95,6 +97,7 @@ float CModel::fGetRandom()
     return result;
 }
 
+//fonction renvoyant un float aleatoire entre deux valeur pour Z
 float CModel::fGetRandomZ()
 {
     int High = 0;
@@ -118,21 +121,9 @@ void CModel::detruireCube(int var){
             if (positionCurrent.fGetX()>positionToRemove.fGetX())
             {
                 var = i;
-                //toRemove=current;
             }
         }
     }
-
-    /*int j=0;
-    bool found = false;
-    while (j<tableau.size() && found == false)
-    {
-        CObject* current = tableau.at(j);
-        if (current==toRemove){
-                tableau.removeAt(j);
-        }
-        found = true;
-    }*/
     tableau.removeAt(var);
 }
 
@@ -158,5 +149,13 @@ bool CModel::balleEnBas()
 
 void CModel::reinitialiser()
 {
+    CVector3 position(2,0,8);
+    boule->setPosition(&position);
+    boule->vSetVitesse(0);
+    boule->vSetVecteurVitesse(0);
+}
 
+void CModel::demarer() {
+    boule->vSetVitesse(0.3535);
+    boule->vSetVecteurVitesse(0);
 }

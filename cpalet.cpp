@@ -102,12 +102,17 @@ void CPalet::vGetSideColor(int _face, CVector3 *_poColor)
     }
 }
 
+//recupere les données du vecteur scale
+
 void CPalet::getScale(CVector3 *_poScale)
 {
    _poScale->vSetX(scale->fGetX());
    _poScale->vSetY(scale->fGetY());
    _poScale->vSetZ(scale->fGetZ());
 }
+
+//verifie si il y a collision avec un autre objet suivant sa position et celle de l'objet
+
 
 bool CPalet::detectionCollision(CVector3 *_poPosBoule, int *i)
 {
@@ -118,19 +123,11 @@ bool CPalet::detectionCollision(CVector3 *_poPosBoule, int *i)
     float yc=positionObjet.fGetY();
     float zs=_poPosBoule->fGetZ();
     float zc=positionObjet.fGetZ();
-    float L=2*scale->fGetY()*0.4;
-    float l=2*scale->fGetZ()*1.2;
+    float L=2.0*scale->fGetY()*0.4;
+    float l=2.0*scale->fGetZ()*1.2;
 
-    Rectangle rect(yc,zc,L+0.3,l+0.3);
-    if (rect.contains(ys,zs))
-    {
-        if (fabs(ys-yc)<((l/2))) {
-            *i=0;
-        }
-        else {
-            *i=1;
-        }
-        return true;
-    }
-    return false;
+    //on cree un rectangle aux dimension un petit peu plus grande que l'objet
+    //et on verifie s'il contient l'autre objet
+    Rectangle rect(yc,zc,L+0.6,l+0.6);
+    return (rect.contains(ys,zs));
 }

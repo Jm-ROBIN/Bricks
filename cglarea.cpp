@@ -6,6 +6,8 @@
 #include <CSphere.h>
 #include <QTimer>
 #include <QVector>
+#include <QSound>
+#include <QApplication>
 
 bool swich = false;
 
@@ -18,10 +20,14 @@ CGLArea::CGLArea(QWidget *parent)
     m_azimuth=0;
     avantDepla=0;
 
+    QSound* Music=new QSound(QApplication::applicationDirPath() +"/sounds/8BitKtulu.wav");
+    Music->setLoops(10);
+    Music->play();
+
     //sert pour le mouvement de la boule
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(mouvementBoule()));
-    timer->start(1);
+    QTimer *timerMvt = new QTimer(this);
+    connect(timerMvt, SIGNAL(timeout()), this, SLOT(mouvementBoule()));
+    timerMvt->start(15);
 }
 CGLArea::~CGLArea()
 {
@@ -183,15 +189,32 @@ void CGLArea::mouvementBoule()
     if (collision) {
         boule->vRebondir(sensCollision);
         m_poModel->detruireCube(var-1);
+
+        QSound::play(QApplication::applicationDirPath() +"/sounds/brique.wav");
+
         updateGL();
+        boule->vGetNextPosition(&NextPosition);
+    }
+    else{
+        if (palet->detectionCollision(&NextPosition,&sensCollision))
+        {
+            CVector3 posPalet;
+            palet->getPosition(&posPalet);
+            float fEcart = posPalet.fGetY() - NextPosition.fGetY();
+            float fAngle = ((3.14159265)/(3.0*1.6)*fabs(fEcart));
+            if (boule->fGetVitesse()!=0)
+            {
+                QSound::play(QApplication::applicationDirPath() +"/sounds/palet.wav");
+            }
+            if (fEcart<0){
+                boule->vSetVecteurVitesse(fAngle);
+            }
+            else {
+                boule->vSetVecteurVitesse(-fAngle);
+            }
+        }
     }
     boule->vGetNextPosition(&NextPosition);
-
-    sensCollision = -1;
-    if (palet->detectionCollision(&NextPosition,&sensCollision))
-    {
-        boule->vRebondir(sensCollision);
-    }
 
     if (NextPosition.fGetY()<-10.666666666)
         boule->vRebondir(1);
@@ -217,8 +240,7 @@ void CGLArea::mouvementPalet(int x)
     palet->getPosition(&_poPositionAvant);
     float deplacement = 0.1*dx + _poPositionAvant.fGetY();
 
-    if (deplacement<9.5 && deplacement>-9.5)
-    {
+    if (deplacement<9.5 && deplacement>-9.5){
         CVector3 _poPositionMove(2,deplacement,9);
         palet->setPosition(&_poPositionMove);
     }
@@ -406,9 +428,4 @@ void CGLArea::afficherBords()
         glFlush();
 
     }
-}
-
-void CGLArea::demarrer()
-{
-
 }

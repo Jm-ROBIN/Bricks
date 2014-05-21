@@ -37,7 +37,6 @@ public:
     void afficherBords();
 
     int onDoitStopper();
-    void demarrer();
 protected:
     void initializeGL();
     void paintGL();

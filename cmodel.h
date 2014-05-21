@@ -34,6 +34,7 @@ public:
     bool balleEnBas();
 
     void reinitialiser();
+    void demarer();
 };
 
 #endif // CMODEL_H

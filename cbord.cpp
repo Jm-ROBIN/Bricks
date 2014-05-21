@@ -71,6 +71,8 @@ void CBord::vGetVertex(int _iFace, int _iVertex, CVector3 *_poVect)
     _poVect->vSetZ(m_fVertices[n][2]);
 }
 
+//recuperation dans un vector donné des coodornnées spaciales d'un vertex donné
+//alt car different suivant bord haut/bas ou les cotes
 void CBord::vGetVertexAlt(int _iFace, int _iVertex, CVector3 *_poVect)
 {
     int n=m_iFaces[_iFace][_iVertex];
@@ -119,6 +121,8 @@ void CBord::vGetSideColor(int _face, CVector3 *_poColor)
     }
 }
 
+//recupere les données du vecteur scale
+
 void CBord::getScale(CVector3 *_poScale)
 {
     _poScale->vSetX(scale->fGetX());
@@ -126,6 +130,7 @@ void CBord::getScale(CVector3 *_poScale)
     _poScale->vSetZ(scale->fGetZ());
 }
 
+//verifie si il y a collision avec un autre objet suivant sa position et celle de l'objet
 bool CBord::detectionCollision(CVector3 *_poPosBoule, int *i)
 {
     CVector3 positionObjet;

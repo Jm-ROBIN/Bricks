@@ -101,6 +101,7 @@ void CCube::vGetSideColor(int _face, CVector3 *_poColor)
     }
 }
 
+//recupere les données du vecteur scale
 void CCube::getScale(CVector3 *_poScale)
 {
     _poScale->vSetX(scale->fGetX());
@@ -108,6 +109,8 @@ void CCube::getScale(CVector3 *_poScale)
     _poScale->vSetZ(scale->fGetZ());
 }
 
+
+//verifie si il y a collision avec un autre objet suivant sa position et celle de l'objet
 
 bool CCube::detectionCollision(CVector3 *_poPosBoule, int *i)
 {
@@ -121,10 +124,12 @@ bool CCube::detectionCollision(CVector3 *_poPosBoule, int *i)
     float L=2*scale->fGetY()*0.75;
     float l=2*scale->fGetZ()*0.5;
 
-    Rectangle rect(yc,zc,L+0.48,l+0.48);
+    //on cree un rectangle aux dimension un petit peu plus grande que l'objet
+    //et on verifie s'il contient l'autre objet
+    Rectangle rect(yc,zc,L+0.6,l+0.6);
     if (rect.contains(ys,zs))
     {
-        if (fabs(ys-yc)<((L/2)-0.2)) {
+        if (fabs(ys-yc)<((L/2.0)-0.25)) {
             *i=0;
         }
         else {
